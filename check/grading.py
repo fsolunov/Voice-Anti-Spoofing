@@ -1,8 +1,8 @@
-import os
 import csv
-import numpy as np
+import os
 from copy import deepcopy
 
+import numpy as np
 from calculate_eer import compute_eer
 
 # --- Paths ---
@@ -16,10 +16,7 @@ index = []
 with open(PROTOCOL_PATH, "r") as protocol:
     for line in protocol:
         _, key, _, alg_id, label = line.strip().split()
-        index.append({
-            "key": key,
-            "label": 1 if label == "bonafide" else 0
-        })
+        index.append({"key": key, "label": 1 if label == "bonafide" else 0})
 
 # --- Prepare output ---
 results = []
@@ -61,7 +58,7 @@ for filename in os.listdir(SOLUTIONS_DIR):
         spoof_cm = scores[labels == 0]
         eer, _ = compute_eer(bona_cm, spoof_cm)
 
-        eer *= 100 # in %
+        eer *= 100  # in %
 
         # Grade calculation
         if eer > 10.9:
@@ -72,12 +69,14 @@ for filename in os.listdir(SOLUTIONS_DIR):
             # Linear interpolation between 2 and 10
             grade = 2 + (10.9 - eer) * (8 / (10.9 - 5.3))
 
-        results.append({
-            "name": name,
-            "email": name + "@edu.hse.ru",
-            "eer": round(eer, 4),
-            "grade": round(grade, 2)
-        })
+        results.append(
+            {
+                "name": name,
+                "email": name + "@edu.hse.ru",
+                "eer": round(eer, 4),
+                "grade": round(grade, 2),
+            }
+        )
 
 # --- Write output CSV ---
 with open(OUTPUT_CSV, "w", newline="") as f:

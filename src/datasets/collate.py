@@ -16,9 +16,7 @@ def collate_fn(dataset_items: list[dict]):
 
     result_batch = {}
 
-    result_batch["features"] = torch.stack(
-        [item["features"] for item in dataset_items]
-    )
+    result_batch["features"] = torch.stack([item["features"] for item in dataset_items])
     result_batch["labels"] = torch.tensor(
         [item["labels"] for item in dataset_items], dtype=torch.long
     )

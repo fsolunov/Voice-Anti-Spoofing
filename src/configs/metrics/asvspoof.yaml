@@ -4,4 +4,3 @@ train:
 inference:
   - _target_: src.metrics.AccuracyMetric
     name: "Accuracy"
-  

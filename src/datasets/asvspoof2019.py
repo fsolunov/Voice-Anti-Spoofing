@@ -68,7 +68,6 @@ class ASVSpoof2019LADataset(BaseDataset):
 
     @property
     def utterance_ids(self):
-
         return [entry["utterance_id"] for entry in self._index]
 
     def __getitem__(self, index):

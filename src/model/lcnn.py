@@ -12,9 +12,7 @@ class MaxFeatureMap(nn.Module):
         return torch.maximum(first, second)
 
 
-def _linear_triangular_filterbank(
-    n_fft_bins: int, n_filters: int, sample_rate: int
-):
+def _linear_triangular_filterbank(n_fft_bins: int, n_filters: int, sample_rate: int):
     frequencies = torch.linspace(0.0, sample_rate / 2, n_fft_bins)
     edges = torch.linspace(0.0, sample_rate / 2, n_filters + 2)
     filters = []
@@ -93,7 +91,7 @@ class LCNN(nn.Module):
         self.classifier = nn.Sequential(
             nn.Linear(flatten_size, 160, bias=False),
             MaxFeatureMap(dim=1),
-            nn.Dropout(p=dropout), 
+            nn.Dropout(p=dropout),
             nn.BatchNorm1d(80),
             nn.Linear(80, 2),
         )
@@ -121,7 +119,9 @@ class LCNN(nn.Module):
     def __str__(self):
         all_parameters = sum(parameter.numel() for parameter in self.parameters())
         trainable = sum(
-            parameter.numel() for parameter in self.parameters() if parameter.requires_grad
+            parameter.numel()
+            for parameter in self.parameters()
+            if parameter.requires_grad
         )
         result_info = super().__str__()
         result_info = result_info + f"\nAll parameters: {all_parameters}"
