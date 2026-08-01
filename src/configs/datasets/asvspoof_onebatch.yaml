@@ -1,0 +1,16 @@
+train:
+  _target_: src.datasets.ASVSpoof2019LADataset
+  data_root: ${data_root}
+  split: train
+  sample_rate: 16000
+  limit: 64
+  shuffle_index: false
+  instance_transforms: ${transforms.instance_transforms.inference}
+dev:
+  _target_: src.datasets.ASVSpoof2019LADataset
+  data_root: ${data_root}
+  split: train
+  sample_rate: 16000
+  limit: 64
+  shuffle_index: false
+  instance_transforms: ${transforms.instance_transforms.inference}

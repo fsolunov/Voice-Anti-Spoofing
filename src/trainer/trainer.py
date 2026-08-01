@@ -1,3 +1,7 @@
+import torch
+from tqdm.auto import tqdm
+
+from src.metrics.eer import compute_eer
 from src.metrics.tracker import MetricTracker
 from src.trainer.base_trainer import BaseTrainer
 
@@ -47,13 +51,49 @@ class Trainer(BaseTrainer):
             if self.lr_scheduler is not None:
                 self.lr_scheduler.step()
 
-        # update metrics for each loss (in case of multiple losses)
+        # Weight averages by sample count; the template's default n=1 gives
+        # the last short batch the same weight as a full batch.
+        batch_size = batch["labels"].shape[0]
         for loss_name in self.config.writer.loss_names:
-            metrics.update(loss_name, batch[loss_name].item())
+            metrics.update(loss_name, batch[loss_name].item(), n=batch_size)
 
         for met in metric_funcs:
-            metrics.update(met.name, met(**batch))
+            metrics.update(met.name, met(**batch), n=batch_size)
         return batch
+
+    def _evaluation_epoch(self, epoch, part, dataloader):
+        """Evaluate one whole split and compute EER exactly once.
+
+        EER is nonlinear: averaging per-batch EERs is mathematically wrong.
+        This override retains the template loop but pools every score and label
+        before calling the exact homework implementation.
+        """
+
+        self.is_train = False
+        self.model.eval()
+        self.evaluation_metrics.reset()
+        all_scores = []
+        all_labels = []
+
+        with torch.no_grad():
+            for batch_idx, batch in tqdm(
+                enumerate(dataloader), desc=part, total=len(dataloader)
+            ):
+                batch = self.process_batch(batch, metrics=self.evaluation_metrics)
+                all_scores.append(batch["scores"].detach().cpu())
+                all_labels.append(batch["labels"].detach().cpu())
+
+        scores = torch.cat(all_scores).numpy()
+        labels = torch.cat(all_labels).numpy()
+        eer_fraction, _ = compute_eer(scores[labels == 1], scores[labels == 0])
+        logs = self.evaluation_metrics.result()
+        logs["EER"] = 100.0 * eer_fraction
+
+        self.writer.set_step(epoch * self.epoch_len, part)
+        self._log_scalars(self.evaluation_metrics)
+        self.writer.add_scalar("EER", logs["EER"])
+        self._log_batch(batch_idx, batch, part)
+        return logs
 
     def _log_batch(self, batch_idx, batch, mode="train"):
         """

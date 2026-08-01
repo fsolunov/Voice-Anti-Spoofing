@@ -1,0 +1,21 @@
+instance_transforms:
+  train:
+    features:
+      _target_: src.transforms.FixedLengthPowerSpectrogram
+      n_fft: 512
+      win_length: 320
+      hop_length: 160
+      num_frames: 750
+      random_crop: true
+  inference:
+    features:
+      _target_: src.transforms.FixedLengthPowerSpectrogram
+      n_fft: 512
+      win_length: 320
+      hop_length: 160
+      num_frames: 750
+      random_crop: false
+
+batch_transforms:
+  train: null
+  inference: null

@@ -1,0 +1,7 @@
+train:
+  - _target_: src.metrics.AccuracyMetric
+    name: "Accuracy"
+inference:
+  - _target_: src.metrics.AccuracyMetric
+    name: "Accuracy"
+  

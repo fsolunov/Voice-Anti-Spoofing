@@ -1,0 +1,8 @@
+eval:
+  _target_: src.datasets.ASVSpoof2019LADataset
+  data_root: ${data_root}
+  split: eval
+  sample_rate: 16000
+  limit: null
+  shuffle_index: false
+  instance_transforms: ${transforms.instance_transforms.inference}

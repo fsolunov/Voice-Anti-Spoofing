@@ -2,10 +2,7 @@ import torch
 from torch import nn
 
 
-class ExampleLoss(nn.Module):
-    """
-    Example of a loss function to use.
-    """
+class CrossEntropyLoss(nn.Module):
 
     def __init__(self):
         super().__init__()

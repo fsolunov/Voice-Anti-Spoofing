@@ -11,7 +11,7 @@ class MetricTracker:
         Args:
             *keys (list[str]): list (as positional arguments) of metric
                 names (may include the names of losses)
-            writer (WandBWriter | CometMLWriter | None): experiment tracker.
+            writer (WandBWriter | None): experiment tracker.
                 Not used in this code version. Can be used to log metrics
                 from each batch.
         """
@@ -23,8 +23,7 @@ class MetricTracker:
         """
         Reset all metrics after epoch end.
         """
-        for col in self._data.columns:
-            self._data[col].values[:] = 0
+        self._data.loc[:, :] = 0.0
 
     def update(self, key, value, n=1):
         """
@@ -35,8 +34,6 @@ class MetricTracker:
             value (float): metric value on the batch.
             n (int): how many times to count this value.
         """
-        # if self.writer is not None:
-        #     self.writer.add_scalar(key, value)
         self._data.loc[key, "total"] += value * n
         self._data.loc[key, "counts"] += n
         self._data.loc[key, "average"] = self._data.total[key] / self._data.counts[key]

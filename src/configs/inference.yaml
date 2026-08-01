@@ -1,13 +1,17 @@
 defaults:
-  - model: baseline
-  - metrics: example
-  - datasets: example_eval # we do not want to run inference on training data
-  - dataloader: example
-  - transforms: example
+  - model: lcnn
+  - metrics: asvspoof
+  - datasets: asvspoof_eval
+  - dataloader: asvspoof
+  - transforms: asvspoof
   - _self_
+
+data_root: ${oc.env:ASVSPOOF_ROOT}
+
 inferencer:
-  device_tensors: ["data_object", "labels"] # which tensors should be on device (ex. GPU)
-  device: auto # device name or "auto"
-  save_path: "example" # any name here, can be a dataset name
+  device_tensors: ["features", "labels"]
+  device: auto
+  save_path: "asvspoof_eval"
+  submission_name: "fisolunov.csv"
+  from_pretrained: null
   seed: 1
-  from_pretrained: "saved/model_best.pth" # path to the pretrained model

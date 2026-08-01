@@ -39,25 +39,55 @@ class WandBWriter:
         """
         try:
             import wandb
+        except ImportError as error:
+            raise ImportError("Install project requirements to use WandB") from error
 
+        mode = str(mode).lower()
+        if mode not in {"online", "offline", "disabled"}:
+            raise ValueError(
+                "writer.mode must be one of: online, offline, disabled; "
+                f"got {mode!r}"
+            )
+
+        # An empty value is convenient in Hydra but W&B expects either a real
+        # account/team name or Python None.
+        entity = entity or None
+
+        # Offline and disabled smoke tests must not contact the W&B API or ask
+        # for credentials. Online runs need an explicit owner on accounts that
+        # do not have a default entity configured.
+        if mode == "online":
+            if entity is None:
+                raise ValueError(
+                    "Online W&B logging requires an entity. Set "
+                    "WANDB_ENTITY to your W&B username/team or override "
+                    "writer.entity=<name>."
+                )
             wandb.login()
 
-            self.run_id = run_id
+        trainer_config = project_config.get("trainer", {})
+        is_resuming = trainer_config.get("resume_from") is not None
+        # A fresh run must not query W&B for resume status. In offline mode the
+        # SDK cannot resume a cloud run, so resume is enabled only for an
+        # explicit online checkpoint continuation.
+        resume = "allow" if mode == "online" and is_resuming else None
 
-            wandb.init(
-                project=project_name,
-                entity=entity,
-                config=project_config,
-                name=run_name,
-                resume="allow",  # resume the run if run_id existed
-                id=self.run_id,
-                mode=mode,
-                save_code=kwargs.get("save_code", False),
-            )
-            self.wandb = wandb
-
-        except ImportError:
-            logger.warning("For use wandb install it via \n\t pip install wandb")
+        self.run_id = run_id
+        wandb.init(
+            project=project_name,
+            entity=entity,
+            config=project_config,
+            name=run_name,
+            resume=resume,
+            id=self.run_id,
+            mode=mode,
+            save_code=kwargs.get("save_code", True),
+        )
+        self.wandb = wandb
+        # These summaries make the best dev result visible on the run page.
+        wandb.define_metric("loss_dev", summary="min")
+        wandb.define_metric("EER_dev", summary="min")
+        wandb.define_metric("Accuracy_dev", summary="max")
 
         self.step = 0
         # the mode is usually equal to the current partition name
