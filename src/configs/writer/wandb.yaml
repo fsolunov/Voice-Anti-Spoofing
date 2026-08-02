@@ -1,8 +1,9 @@
 _target_: src.logger.WandBWriter
-project_name: "pytorch_template"
-entity: null
-run_name: "testing"
-mode: "online"
-loss_names: ["loss"] # which losses to log (useful for multi-loss tasks, s.a. GANs)
-log_checkpoints: False # set to True if you want to log save_dir with checkpoints to W&B
-id_length: 8 # length of the run_id
+project_name: "asvspoof2019-lcnn"
+entity: ${oc.env:WANDB_ENTITY}
+run_name: ${oc.env:WANDB_RUN_NAME}
+mode: ${oc.env:WANDB_MODE,online}
+loss_names: ["loss"]
+log_checkpoints: false
+save_code: true
+id_length: 8

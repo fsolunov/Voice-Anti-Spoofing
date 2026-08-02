@@ -2,7 +2,7 @@ defaults:
   - model: lcnn
   - metrics: asvspoof
   - datasets: asvspoof_eval
-  - dataloader: asvspoof
+  - dataloader: asvspoof_full
   - transforms: asvspoof
   - _self_
 

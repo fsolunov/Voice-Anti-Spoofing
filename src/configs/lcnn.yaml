@@ -1,21 +1,20 @@
 defaults:
   - model: lcnn
-  - writer: wandb
+  - writer: wandb_full
   - metrics: asvspoof
-  - datasets: asvspoof_deadline
-  - dataloader: asvspoof_deadline
+  - datasets: asvspoof_full
+  - dataloader: asvspoof_full
   - transforms: asvspoof
   - _self_
 
 data_root: ${oc.env:ASVSPOOF_ROOT}
 
 optimizer:
-  _target_: torch.optim.Adam
+  _target_: torch.optim.AdamW
   lr: 3e-4
   betas: [0.9, 0.999]
   eps: 1e-8
   weight_decay: 0.0
-
 lr_scheduler:
   _target_: src.utils.EpochStepLR
   steps_per_epoch: ${trainer.epoch_len}
@@ -27,16 +26,16 @@ loss_function:
 
 trainer:
   log_step: 50
-  n_epochs: 50
+  n_epochs: 90
   epoch_len: 396
   device_tensors: ["features", "labels"]
   resume_from: null
   from_pretrained: null
-  device: cuda
-  override: false
+  device: auto
+  override: true
   monitor: "min dev_EER"
-  save_period: 5
-  early_stop: 12
+  save_period: 10
+  early_stop: 25
   save_dir: "saved"
-  seed: 1
+  seed: 10
   skip_oom: false

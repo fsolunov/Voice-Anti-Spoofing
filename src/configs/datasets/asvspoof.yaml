@@ -12,6 +12,6 @@ dev:
   data_root: ${data_root}
   split: dev
   sample_rate: 16000
-  limit: 6144
-  shuffle_index: true
+  limit: null
+  shuffle_index: false
   instance_transforms: ${transforms.instance_transforms.inference}
