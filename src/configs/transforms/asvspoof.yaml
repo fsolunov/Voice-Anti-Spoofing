@@ -1,20 +1,30 @@
 instance_transforms:
   train:
     features:
-      _target_: src.transforms.FixedLengthPowerSpectrogram
+      _target_: src.transforms.LFCCFrontend
+      sample_rate: 16000
+      num_samples: 64600
+      random_crop: true
       n_fft: 512
       win_length: 320
       hop_length: 160
-      num_frames: 750
-      random_crop: true
+      n_filters: 20
+      n_lfcc: 20
+      with_energy: true
+      with_deltas: true
   inference:
     features:
-      _target_: src.transforms.FixedLengthPowerSpectrogram
+      _target_: src.transforms.LFCCFrontend
+      sample_rate: 16000
+      num_samples: 64600
+      random_crop: false
       n_fft: 512
       win_length: 320
       hop_length: 160
-      num_frames: 750
-      random_crop: false
+      n_filters: 20
+      n_lfcc: 20
+      with_energy: true
+      with_deltas: true
 
 batch_transforms:
   train: null

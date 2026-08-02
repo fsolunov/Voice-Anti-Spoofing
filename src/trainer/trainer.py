@@ -88,6 +88,7 @@ class Trainer(BaseTrainer):
         eer_fraction, _ = compute_eer(scores[labels == 1], scores[labels == 0])
         logs = self.evaluation_metrics.result()
         logs["EER"] = 100.0 * eer_fraction
+        logs["Selection"] = logs["EER"] + 0.01 * logs.get("loss", 0.0)
 
         self.writer.set_step(epoch * self.epoch_len, part)
         self._log_scalars(self.evaluation_metrics)

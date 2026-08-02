@@ -1,7 +1,7 @@
 _target_: src.model.LCNN
-n_fft_bins: 257
-n_filters: 60
-n_frames: 750
-sample_rate: 16000
-dropout: 0.75
-log_epsilon: 1e-12
+feature_dim: 60
+num_classes: 2
+trunk_dropout: 0.7
+head_dropout: 0.7
+hidden_dim: 160
+use_lstm: true

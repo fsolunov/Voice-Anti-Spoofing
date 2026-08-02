@@ -1,7 +1,7 @@
 _target_: src.logger.WandBWriter
 project_name: "asvspoof2019-lcnn"
-entity: ${oc.env:WANDB_ENTITY}
-run_name: ${oc.env:WANDB_RUN_NAME}
+entity: ${oc.env:WANDB_ENTITY,""}
+run_name: ${oc.env:WANDB_RUN_NAME,lcnn_run}
 mode: ${oc.env:WANDB_MODE,online}
 loss_names: ["loss"]
 log_checkpoints: false

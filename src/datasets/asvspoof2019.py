@@ -1,6 +1,7 @@
 from pathlib import Path
 
-import torchaudio
+import soundfile
+import torch
 
 from src.datasets.base_dataset import BaseDataset
 
@@ -72,8 +73,10 @@ class ASVSpoof2019LADataset(BaseDataset):
 
     def __getitem__(self, index):
         entry = self._index[index]
-        waveform, sample_rate = torchaudio.load(entry["path"])
-        waveform = waveform.mean(dim=0, keepdim=True)
+        audio, sample_rate = soundfile.read(
+            entry["path"], dtype="float32", always_2d=True
+        )
+        waveform = torch.from_numpy(audio).mean(dim=1, keepdim=True).transpose(0, 1)
         item = {
             "features": waveform,
             "labels": entry["label"],

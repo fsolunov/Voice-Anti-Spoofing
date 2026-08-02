@@ -1,1 +1,1 @@
-from src.transforms.spectrogram import FixedLengthPowerSpectrogram
+from src.transforms.spectrogram import LFCCFrontend

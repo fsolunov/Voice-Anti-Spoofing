@@ -2,11 +2,11 @@ defaults:
   - model: lcnn
   - metrics: asvspoof
   - datasets: asvspoof_eval
-  - dataloader: asvspoof_full
+  - dataloader: asvspoof
   - transforms: asvspoof
   - _self_
 
-data_root: ${oc.env:ASVSPOOF_ROOT}
+data_root: ${oc.env:ASVSPOOF_ROOT,data/LA}
 
 inferencer:
   device_tensors: ["features", "labels"]
