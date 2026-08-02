@@ -4,4 +4,3 @@ num_classes: 2
 trunk_dropout: 0.7
 head_dropout: 0.7
 hidden_dim: 160
-use_lstm: true
