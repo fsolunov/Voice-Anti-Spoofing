@@ -1,149 +1,162 @@
-# PyTorch Template for DL projects
+# Voice Anti-Spoofing
 
-<p align="center">
-  <a href="#about">About</a> •
-  <a href="#tutorials">Tutorials</a> •
-  <a href="#examples">Examples</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#how-to-use">How To Use</a> •
-  <a href="#useful-links">Useful Links</a> •
-  <a href="#credits">Credits</a> •
-  <a href="#license">License</a>
-</p>
+## О проекте
 
-<p align="center">
-<a href="https://github.com/Blinorot/pytorch_project_template/generate">
-  <img src="https://img.shields.io/badge/use%20this-template-green?logo=github">
-</a>
-<a href="https://github.com/Blinorot/pytorch_project_template/blob/main/LICENSE">
-   <img src=https://img.shields.io/badge/license-MIT-blue.svg>
-</a>
-<a href="https://github.com/Blinorot/pytorch_project_template/blob/main/CITATION.cff">
-   <img src="https://img.shields.io/badge/cite-this%20repo-purple">
-</a>
-</p>
+Система обнаружения синтезированной речи (Countermeasure, CM), обученная и измеренная на разделе Logical Access (LA) датасета [ASVSpoof 2019 Dataset](https://datashare.ed.ac.uk/handle/10283/3336) ([Kaggle Link](https://www.kaggle.com/datasets/awsaf49/asvpoof-2019-dataset)). 
 
-## About
 
-This repository contains a template for [PyTorch](https://pytorch.org/)-based Deep Learning projects.
+Проект использует шаблон [PyTorch Project Template](https://github.com/Blinorot/pytorch_project_template)
 
-The template utilizes different python-dev techniques to improve code readability. Configuration methods enhance reproducibility and experiments control.
+---
 
-The repository is released as a part of the [HSE DLA course](https://github.com/markovka17/dla), however, can easily be adopted for any DL-task.
+## Установка и запуск
 
-This template is the official recommended template for the [EPFL CS-433 ML Course](https://www.epfl.ch/labs/mlo/machine-learning-cs-433/).
+1. Создайте и активируйте окружение.
 
-**New:** we added a [HF Main](https://github.com/Blinorot/pytorch_project_template/tree/hf_main) variant of the template with [HuggingFace](https://huggingface.co/) Integration for multi-GPU and multi-node training, automatic mixed precision, gradient accumulation, and seamless HuggingFace Ecosystem Compatibility.
-
-> 📖 **If you use this template in your work, please cite this repository or include a reference. Attribution supports the project and encourages continued development.**
-
-## Tutorials
-
-This template utilizes experiment tracking techniques, such as [WandB](https://docs.wandb.ai/) and [Comet ML](https://www.comet.com/docs/v2/), and [Hydra](https://hydra.cc/docs/intro/) for the configuration. It also automatically reformats code and conducts several checks via [pre-commit](https://pre-commit.com/). If you are not familiar with these tools, we advise you to look at the tutorials below:
-
-- [Python Dev Tips](https://github.com/ebezzam/python-dev-tips): information about [Git](https://git-scm.com/doc), [pre-commit](https://pre-commit.com/), [Hydra](https://hydra.cc/docs/intro/), and other stuff for better Python code development. The YouTube recording of the workshop is available [here](https://youtu.be/okxaTuBdDuY).
-
-- [Seminar on R&D Coding 2025](https://youtu.be/PE1zaW5it_A): Seminar from the [LauzHack Deep Learning Bootcamp](https://github.com/LauzHack/deep-learning-bootcamp/) with discussion on logging, project-based coding, configuration, and reproducibility. The materials can be found [here](https://github.com/LauzHack/deep-learning-bootcamp/tree/summer25/day05).
-
-- [Seminar on R&D Coding 2024](https://youtu.be/sEA-Js5ZHxU): Seminar from the [LauzHack Deep Learning Bootcamp](https://github.com/LauzHack/deep-learning-bootcamp/) with template discussion and reasoning. It also explains how to work with [WandB](https://docs.wandb.ai/). The seminar materials can be found [here](https://github.com/LauzHack/deep-learning-bootcamp/blob/main/day03/Seminar_WandB_and_Coding.ipynb).
-
-- [HSE DLA Course Introduction Week](https://github.com/markovka17/dla/tree/2024/week01): combines the two seminars above into one with some updates, including an extra example for [Comet ML](https://www.comet.com/docs/v2/).
-
-- [PyTorch Basics](https://github.com/markovka17/dla/tree/2024/week01/intro_to_pytorch): several notebooks with [PyTorch](https://pytorch.org/docs/stable/index.html) basics and corresponding seminar recordings from the [LauzHack Deep Learning Bootcamp](https://github.com/LauzHack/deep-learning-bootcamp/).
-
-To start working with a template, just click on the `use this template` button.
-
-<a href="https://github.com/Blinorot/pytorch_project_template/generate">
-  <img src="https://img.shields.io/badge/use%20this-template-green?logo=github">
-</a>
-
-You can choose any of the branches as a starting point. [Set your choice as the default branch](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/changing-the-default-branch) in the repository settings. You can also [delete unnecessary branches](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository).
-
-## Examples
-
-> [!IMPORTANT]
-> The main branch leaves some of the code parts empty or fills them with dummy examples, showing just the base structure. The final users can add code required for their own tasks.
-
-You can find examples of this template completed for different tasks in other branches:
-
-- [HF Main](https://github.com/Blinorot/pytorch_project_template/tree/hf_main): the variant of the `main` branch with [HuggingFace](https://huggingface.co/) Integration. Supports multi-GPU and multi-node training, automatic mixed precision, gradient accumulation, and seamless HuggingFace Ecosystem Compatibility.
-
-- [Image classification](https://github.com/Blinorot/pytorch_project_template/tree/example/image-classification): simple classification problem on [MNIST](https://yann.lecun.com/exdb/mnist/) and [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html) datasets.
-
-- [ASR](https://github.com/Blinorot/pytorch_project_template/tree/example/asr): template for the automatic speech recognition (ASR) task. Some of the parts (for example, `collate_fn` and beam search for `text_encoder`) are missing for studying purposes of [HSE DLA course](https://github.com/markovka17/dla).
-
-## Installation
-
-Installation may depend on your task. The general steps are the following:
-
-0. (Optional) Create and activate new environment using [`conda`](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html) or `venv` ([`+pyenv`](https://github.com/pyenv/pyenv)).
-
-   a. `conda` version:
+   Через `conda`:
 
    ```bash
-   # create env
-   conda create -n project_env python=PYTHON_VERSION
+	# create env
+	conda create -n project_env python=PYTHON_VERSION
 
-   # activate env
-   conda activate project_env
+	# activate env
+	conda activate project_env
    ```
 
-   b. `venv` (`+pyenv`) version:
+   Через `venv` (`+pyenv`):
 
    ```bash
-   # create env
-   ~/.pyenv/versions/PYTHON_VERSION/bin/python3 -m venv project_env
+	# create env
+	~/.pyenv/versions/PYTHON_VERSION/bin/python3 -m venv project_env
 
-   # alternatively, using default python version
-   python3 -m venv project_env
+	# alternatively, using default python version
+	python3 -m venv project_env
 
-   # activate env
-   source project_env/bin/activate
+	# activate env
+	source project_env/bin/activate
    ```
 
-1. Install all required packages
+2. Установите необходимые пакеты.
 
    ```bash
    pip install -r requirements.txt
    ```
 
-2. Install `pre-commit`:
+3. Установите `pre-commit`.
+
    ```bash
    pre-commit install
    ```
 
-## How To Use
+4. Скачайте раздел LA датасета ASVspoof2019 - с [официальной страницы](https://datashare.ed.ac.uk/handle/10283/3336) или с [Kaggle](https://www.kaggle.com/datasets/awsaf49/asvpoof-2019-dataset) и укажите путь к каталогу, где лежат `ASVspoof2019_LA_train`, `ASVspoof2019_LA_dev`, `ASVspoof2019_LA_eval` и `ASVspoof2019_LA_cm_protocols`
 
-To train a model, run the following command:
+5. Подключите WandB
 
+6. Запустите обучение:
 ```bash
 python3 train.py -cn=CONFIG_NAME HYDRA_CONFIG_ARGUMENTS
 ```
 
-Where `CONFIG_NAME` is a config from `src/configs` and `HYDRA_CONFIG_ARGUMENTS` are optional arguments.
-
-To run inference (evaluate the model or save predictions):
-
+7. Запустите inference (оценить модель или сохранить прогнозы):
 ```bash
 python3 inference.py HYDRA_CONFIG_ARGUMENTS
 ```
+### Просмотр EER
 
-## Useful Links:
+В каталоге `check/` лежат скрипт оценивания и протокол eval:
 
-You may find the following links useful:
+```bash
+mkdir -p check/students_solutions
+cp data/saved/asvspoof_eval/USERNAME.csv check/students_solutions/
+cd check && python3 grading.py && cat grades.csv
+```
 
-- [Report branch](https://github.com/Blinorot/pytorch_project_template/tree/report): Guidelines for writing a scientific report/paper (with an emphasis on DL projects).
+---
 
-- [CLAIRE Template](https://github.com/CLAIRE-Labo/python-ml-research-template): additional template by [EPFL CLAIRE Laboratory](https://www.epfl.ch/labs/claire/) that can be combined with ours to enhance experiments reproducibility via [Docker](https://www.docker.com/).
 
-- [Mamba](https://github.com/mamba-org/mamba) and [Poetry](https://python-poetry.org/): alternatives to [Conda](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html) and [pip](https://pip.pypa.io/en/stable/installation/) package managers given above.
+### Фронтенд
 
-- [Awesome README](https://github.com/matiassingers/awesome-readme): a list of awesome README files for inspiration. Check the basics [here](https://github.com/PurpleBooth/a-good-readme-template).
+Сигнал сначала приводится к фиксированной длине в 64 600 samples. Записи длиннее обрезаются, записи короче дополняются повторением сигнала.
 
-## Credits
+В сравнительном исследовании [3] на этой же задаче сопоставлены три фронтенда: the raw log power spectrogram, a linear filter bank и LFCC. LFCC в исследовании лучше.
 
-This repository is based on a heavily modified fork of [pytorch-template](https://github.com/victoresque/pytorch-template) and [asr_project_template](https://github.com/WrathOfGrapes/asr_project_template) repositories.
+### Модель
 
-## License
+Max-Feature-Map: каждая свёртка выдаёт вдвое больше каналов, чем нужно, а активация вдвое сокращает их обратно, беря поэлементный максимум двух половин.
+Она работает как обучаемый отбор признаков, даёт разреженные градиенты и на задачах анти-спуфинга устойчиво лучше ReLU.
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+| Блок | Слои |
+| ---- | ---- |
+| 1 | Conv 5×5 (1→64), MFM → 32, MaxPool 2×2 |
+| 2 | Conv 1×1 (32→64), MFM → 32, BatchNorm |
+| 3 | Conv 3×3 (32→96), MFM → 48, MaxPool 2×2, BatchNorm |
+| 4 | Conv 1×1 (48→96), MFM → 48, BatchNorm |
+| 5 | Conv 3×3 (48→128), MFM → 64, MaxPool 2×2 |
+| 6 | Conv 1×1 (64→128), MFM → 64, BatchNorm |
+| 7 | Conv 3×3 (64→64), MFM → 32, BatchNorm |
+| 8 | Conv 1×1 (32→64), MFM → 32, BatchNorm |
+| 9 | Conv 3×3 (32→64), MFM → 32, MaxPool 2×2, Dropout 0.7 |
+
+
+## Парамеры
+
+В статьях было доказано, что именно эти параметры дают лучший результат:
+
+| Параметры           | значения                                                      |
+| ----------------- | ---------------------------------------------------------- |
+| Optimiser         | Adam, lr 3e-4, β = (0.9, 0.999), ε = 1e-8, no weight decay |
+| LR schedule       | halved every 15 epochs                                     |
+| Batch size        | 64                                                         |
+| Epochs            | 50, early stopping after 20 epochs without improvement     |
+| Loss              | cross-entropy with class weights [0.1, 0.9]                |
+| Gradient clipping | max norm 5.0                                               |
+| Dropout           | 0.7 in the trunk, 0.7 in the head                          |
+| Random seed       | 10                                                         |
+| Hardware          | one NVIDIA Tesla T4 (Kaggle)                               |
+
+
+### Выбор функции потерь
+
+В исследовании [3] рассматривается вопрос: использовать обычную cross-entropy или A-Softmax. В статье утверждается, что у cross-entropy меньше разброса, вызванного случайным seed, чем у A-Softmax, OC-Softmax, P2SGrad.
+
+
+## Результаты
+
+
+| Показатель        | Значение |
+| ----------------- | -------- |
+| EER на eval       | 5.04 %   |
+| Accuracy на eval  | 86.90 %  |
+| Лучший EER на dev | 0.31 %   |
+
+[WandB графики](https://wandb.ai/fisolunov-hse-university/asvspoof2019-lcnn/runs/nrlr27db)
+
+
+![Кривые обучения](docs/training_curves.png)
+
+*Слева: взвешенная кросс-энтропия на train и dev, логарифмическая шкала
+Справа: dev EER по эпохам, логарифмическая шкала, чёрной точкой отмечен выбранный чекпоинт. 
+Нарисовано через matplotlib` по `logs/train.log`; разобранные значения сохранены в `docs/history.csv`.*
+
+### Анализ графиков
+
+За первые несколько эпох dev EER резко падает с 3.85 % примерно до 1 %, дальше спускается медленно и неровно, с заметными выбросами вверх, и в итоге устанавливается в районе 0.3–0.4%.
+Улучшения явно немонотонны, и более короткое patience остановило бы прогон до 43-й эпохи (которая дала лучший чекпоинт).
+
+Полученный результат согласуется с тем, что говорится в статьях про системы LFCC-LCNN такого размера. В статье [3] говорится, что разброс по случайным seed сопоставим с разницей между архитектурами. На этом фоне 5.04% на прогоне с фиксированным seed - хороший результат.
+
+
+## Заключение
+
+Обучение прошло успешно. Итоговая система показывает EER 5.04% на eval ASVspoof2019 LA, что согласуется с результатами литературы для систем LFCC-LCNN.
+
+## Литература
+
+1. X. Wu, R. He, Z. Sun, T. Tan. *A Light CNN for Deep Face Representation with Noisy Labels*. 
+   [arXiv:1511.02683](https://arxiv.org/abs/1511.02683).
+2. G. Lavrentyeva, S. Novoselov, A. Tseren, M. Volkova, A. Gorlanov, A. Kozlov. *STC Antispoofing Systems for the ASVspoof2019 Challenge*.
+   [arXiv:1904.05576](https://arxiv.org/abs/1904.05576).
+3. X. Wang, J. Yamagishi. *A Comparative Study on Recent Neural Spoofing Countermeasures for Synthetic Speech Detection*.
+   [arXiv:2103.11326](https://arxiv.org/abs/2103.11326).
+4. *ASVspoof 2019 Challenge Evaluation Plan*.
+   [asvspoof.org](https://www.asvspoof.org/asvspoof2019/asvspoof2019_evaluation_plan.pdf).
